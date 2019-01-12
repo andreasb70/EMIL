@@ -2,6 +2,11 @@
 //  EMILCompiler.swift
 //  EMIL
 //
+//  Licensed under MIT License
+//
+//  https://github.com/andreasb70/EMIL
+//
+
 //  Created by Andi on 12.01.19.
 //  Copyright © 2019 Andreas Binner. All rights reserved.
 //
@@ -20,6 +25,7 @@ enum Operator: String {
     case GreaterOrEqual = ">="
     case LessThan = "<"
     case GreaterThan = ">"
+    // Rest are no real operators, but necessary to support the "eval" command
     case Plus = "+"
     case Minus = "-"
     case Times = "*"

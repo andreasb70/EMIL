@@ -2,6 +2,11 @@
 //  EMILRuntime.swift
 //  EMIL
 //
+//  Licensed under MIT License
+//
+//  https://github.com/andreasb70/EMIL
+//
+
 //  Created by Andi on 12.01.19.
 //  Copyright © 2019 Andreas Binner. All rights reserved.
 //
@@ -192,7 +197,6 @@ final class EMILRuntime: EMILRuntimeProtocol {
         let _ = registerCommand("i div ii", handler: emilDivInteger)
         let _ = registerCommand("f div ff", handler: emilDivFloat)
         let _ = registerCommand("i strlen s", handler: emilStrlen)
-        //        let _ = registerCommandLegacy("concat ss", handler: emilConcat)
         let _ = registerCommand("i integer x", handler: emilInteger)
         let _ = registerCommand("f float x", handler: emilFloat)
         let _ = registerCommand("stop", handler: emilStop)

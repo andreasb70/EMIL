@@ -32,6 +32,7 @@
 		E17969A421EA33FF006F4B83 /* EMILCompiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMILCompiler.swift; sourceTree = "<group>"; };
 		E17969A621EA340E006F4B83 /* EMILRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMILRuntime.swift; sourceTree = "<group>"; };
 		E17969A821EA3584006F4B83 /* test.emil */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.emil; sourceTree = "<group>"; };
+		E17969AA21EA615A006F4B83 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +65,7 @@
 		E179699C21EA33E2006F4B83 /* EMIL */ = {
 			isa = PBXGroup;
 			children = (
+				E17969AA21EA615A006F4B83 /* LICENSE */,
 				E179699D21EA33E2006F4B83 /* main.swift */,
 				E17969A421EA33FF006F4B83 /* EMILCompiler.swift */,
 				E17969A621EA340E006F4B83 /* EMILRuntime.swift */,
