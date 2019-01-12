@@ -168,7 +168,25 @@ Of course all control flow constructs can be nested
 
 ### Standard Runtime Commands
 
-TBD
+Command | Description
+---- | ----
+print *String* | Prints to stdout
+*Integer* = add *Integer* *Integer* | Adds two Integers
+*Float* = add *Float* *Float* | Adds two Floats
+*String* = add *String* *String* | Concatenates two Strings
+*Integer* = sub *Integer* *Integer* | Subtracts two Integers
+*Float* = sub *Float* *Float*| Subtracts two Floats  
+*Integer* = mult *Integer* *Integer* | Multiplies two Integers
+*Float* = mult *Float* *Float* | Multiplies two Floats
+*Integer* = div *Integer* *Integer* | Divides two Integers
+*Float* = div *Float* *Float* | Divides two Floats 
+*Integer* = strlen *String* | Returns the lengths of a string
+*Integer* = integer *Any* | Converts to Integer
+*Float* = float *Any* | Converts to Float
+stop | Stops script execution
+call *Integer* | Calls subroutine
+return | Returns from subroutine
+*Float* = eval *Any* ... *Any* | Returns the result of a numeric expression
 
 ### String Interpolation
 
@@ -197,4 +215,73 @@ will result in
 
 ## Adding own commands
 
-TBD
+New commands can be added to a EMILRuntime object using the ```registerCommand``` method:
+
+```
+let _ = runtime.registerCommand("f fact f", handler: emilFactorial)
+```
+
+### Signatures
+
+The first parameter is the so-called signature. The signature defines the types of the return value (if any) and the arguments to the command. The types are
+
+- **i**: Integer
+- **f**: Float
+- **s**: String
+- **o**: Operator
+- **x**: Any type
+
+The general signature format is
+
+```[f|i|s|x]``` ```<command name>``` ```[f|i|s|x]``` ... ```[f|i|s|x]``` ```[:]```
+
+- On first character defines the return value type (if applicable)
+- Followed by the command name
+- Then one type character per argument
+
+One special character is the **:**. It can only be the last character in the type list and denotes that any number of arguments can follow (= variable argument list). All arguments are the assumed of type **x** (= Any).
+
+Examples:
+
+- ```f add ff```: Command *add* takes two Float arguments and returns one Float value
+- ```print s```: Command *print* takes one String argument and returns nothing
+- ```f eval :```: Command *eval* takes any number arguments of type Any and returns one Float value
+
+### Command implementation
+
+For each command a handler function has to be implemented:
+
+```func handler(_ program: EMILProgram, cmd: Command) -> CommandStatus```
+
+- **program**: The current EMIL program context
+- **cmd**: The current command object
+
+**EMILProgram** offers the following methods
+- ```func getArgument(_ command: Command, num argnum: Int) -> Variable?```: The argument number *argnum*
+- ```func setReturn(_ command: Command, val: Variable) -> Bool```: Set the return value
+
+Example implementing a *fact* command calculating the factorial of the given argument:
+
+```
+func emilFactorial(_ program: EMILProgram, cmd: Command) -> CommandStatus {
+    if let arg = program.getArgument(cmd, num: 0) {
+        if case let .varFloat(val) = arg {
+            var mult = val
+            var retVal: Double = 1.0
+            while mult > 0.0 {
+                retVal *= mult
+                mult -= 1.0
+            }
+            if program.setReturn(cmd, val: .varFloat(retVal)) == false {
+                return .failure
+            }
+            return .success
+        }
+    }
+    return .failure
+}
+```
+
+
+
+
