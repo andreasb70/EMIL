@@ -8,23 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		E179699E21EA33E2006F4B83 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179699D21EA33E2006F4B83 /* main.swift */; };
+		E17969A521EA33FF006F4B83 /* EMILCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17969A421EA33FF006F4B83 /* EMILCompiler.swift */; };
+		E17969A721EA340E006F4B83 /* EMILRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17969A621EA340E006F4B83 /* EMILRuntime.swift */; };
+		E17969A921EA3670006F4B83 /* test.emil in CopyFiles */ = {isa = PBXBuildFile; fileRef = E17969A821EA3584006F4B83 /* test.emil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E179699821EA33E2006F4B83 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
+				E17969A921EA3670006F4B83 /* test.emil in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E179699A21EA33E2006F4B83 /* EMIL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EMIL; sourceTree = BUILT_PRODUCTS_DIR; };
 		E179699D21EA33E2006F4B83 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		E17969A421EA33FF006F4B83 /* EMILCompiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMILCompiler.swift; sourceTree = "<group>"; };
+		E17969A621EA340E006F4B83 /* EMILRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMILRuntime.swift; sourceTree = "<group>"; };
+		E17969A821EA3584006F4B83 /* test.emil */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.emil; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +65,9 @@
 			isa = PBXGroup;
 			children = (
 				E179699D21EA33E2006F4B83 /* main.swift */,
+				E17969A421EA33FF006F4B83 /* EMILCompiler.swift */,
+				E17969A621EA340E006F4B83 /* EMILRuntime.swift */,
+				E17969A821EA3584006F4B83 /* test.emil */,
 			);
 			path = EMIL;
 			sourceTree = "<group>";
@@ -120,6 +130,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E179699E21EA33E2006F4B83 /* main.swift in Sources */,
+				E17969A521EA33FF006F4B83 /* EMILCompiler.swift in Sources */,
+				E17969A721EA340E006F4B83 /* EMILRuntime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

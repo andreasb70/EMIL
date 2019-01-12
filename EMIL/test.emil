@@ -1,0 +1,80 @@
+VAR int i,j
+VAR str name
+VAR float pi,d,u
+
+SUB subRoutine2
+    print "subRoutine2"
+    return
+
+SUB subRoutine
+    print "subRoutine"
+    call subRoutine2
+    return
+
+MAIN
+  call subRoutine
+
+  d:=eval (2-3)*-4
+  print "[d]"
+
+  i:=46
+  u:=eval i*365
+  name:="John"
+  print "[name] is [u] days old"
+  if i >= 18
+     print "=> He is of legale age"
+  else
+     print "=> He is not of legal age"
+  endif
+
+  print "Looping ..."
+  j:=0
+  while j<10
+     print "[j]"
+     j:=add j 1
+  wend
+
+  repeat
+    print "[j]"
+    j:=sub j 1
+  until j==-1
+
+  pi:=3.1415
+  d:=25.0
+  u:=mult pi d
+
+  print "pi*25 = [u]"
+
+  i:=integer pi
+  print "Int(pi) = [i]"
+  u:=float i
+  print "Float(Int(pi)) = [u]"
+
+  name := add name " Doe"
+  print name
+
+  j:=strlen name
+  print "strlen(%22John%22) = [j]"
+
+  select
+     case i>3
+        print "Bigger than 3"
+        break
+     case i<4
+        print "Smaller than 4"
+        select
+            case j>0
+            print "Positive"
+            fallthrough
+            case j<0
+            print "Negative"
+            break
+        selend
+        break
+     case i>5
+        print "Bigger than 5"
+        break
+  selend
+
+  u:=fact 5.0
+  print "5! = [u]"
