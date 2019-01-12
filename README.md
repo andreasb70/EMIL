@@ -137,6 +137,8 @@ else
 endif
 ```
 
+Loops:
+
 ```
 while <cond>
   ...
@@ -148,6 +150,8 @@ repeat
   ...
 until <cond>
 ```
+
+To avoid deep nested if/else/endif:
 
 ```
 select
