@@ -283,6 +283,9 @@ func emilFactorial(_ program: EMILProgram, cmd: Command) -> CommandStatus {
 }
 ```
 
+## The Future
 
+EMIL is good enough for many little scripting need withing Apps, but certainly it would be nice to remove some of the restrictions. This most precious ones IMHO are:
 
-
+- Add a concept of local variables (and as a result passing parameters to sub-routines)
+- Add array and dictionary variable types
