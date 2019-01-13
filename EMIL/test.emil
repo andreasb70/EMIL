@@ -56,23 +56,24 @@ MAIN
   j:=strlen name
   print "strlen(%22John%22) = [j]"
 
+  print "Pi is ..."
   select
-     case i>3
-        print "Bigger than 3"
-        break
-     case i<4
-        print "Smaller than 4"
+     case pi>2.0
+        print "... bigger than 2.0"
+        fallthrough
+     case pi>3.0
+        print "... bigger than 3.0"
         select
-            case j>0
-            print "Positive"
+            case pi>0.0
+            print "and positive"
             fallthrough
-            case j<0
-            print "Negative"
+            case pi<0.0
+            print "and negative"
             break
         selend
         break
-     case i>5
-        print "Bigger than 5"
+     case pi<5.0
+        print "... less than 5.0"
         break
   selend
 

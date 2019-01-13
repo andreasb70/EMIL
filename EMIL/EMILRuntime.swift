@@ -146,6 +146,18 @@ enum CommandStatus {
     case success, didJump, failure, stop
 }
 
+enum CompareResult: Int {
+    case badOperator = -2, typeMismatch = -1, compareFalse, compareTrue
+    
+    init(_ b: Bool) {
+        if b == true {
+            self = .compareTrue
+        } else {
+            self = .compareFalse
+        }
+    }
+}
+
 typealias CommandExec = (_ program: EMILProgram, _ cmd: Command)->CommandStatus
 
 struct CommandHandler {
@@ -294,85 +306,91 @@ final class EMILRuntime: EMILRuntimeProtocol {
         return true
     }
     
-    func compare(lhs a1: Variable, operator o: Variable, rhs a2: Variable) -> Bool {
+    func compare(lhs a1: Variable, operator o: Variable, rhs a2: Variable) -> CompareResult {
         if a1.signature != a2.signature {
-            return false
+            return .typeMismatch
         }
         guard case .varOperator(let op) = o else {
-            return false
+            return .badOperator
         }
         switch a1 {
         case .varInteger(let v1):
             if case .varInteger(let v2) = a2 {
                 switch op {
                 case .Equal:
-                    return v1 == v2
+                    return CompareResult(v1 == v2)
                 case .LessThan:
-                    return v1 < v2
+                    return CompareResult(v1 < v2)
                 case .GreaterThan:
-                    return v1 > v2
+                    return CompareResult(v1 > v2)
                 case .NotEqual:
-                    return v1 != v2
+                    return CompareResult(v1 != v2)
                 case .LessOrEqual:
-                    return v1 <= v2
+                    return CompareResult(v1 <= v2)
                 case .GreaterOrEqual:
-                    return v1 >= v2
+                    return CompareResult(v1 >= v2)
                 default:
-                    return false
+                    return .badOperator
                 }
             }
         case .varFloat(let v1):
             if case .varFloat(let v2) = a2 {
                 switch op {
                 case .Equal:
-                    return v1 == v2
+                    return CompareResult(v1 == v2)
                 case .LessThan:
-                    return v1 < v2
+                    return CompareResult(v1 < v2)
                 case .GreaterThan:
-                    return v1 > v2
+                    return CompareResult(v1 > v2)
                 case .NotEqual:
-                    return v1 != v2
+                    return CompareResult(v1 != v2)
                 case .LessOrEqual:
-                    return v1 <= v2
+                    return CompareResult(v1 <= v2)
                 case .GreaterOrEqual:
-                    return v1 >= v2
+                    return CompareResult(v1 >= v2)
                 default:
-                    return false
+                    return .badOperator
                 }
             }
         case .varString(let v1):
             if case .varString(let v2) = a2 {
                 switch op {
                 case .Equal:
-                    return v1 == v2
+                    return CompareResult(v1 == v2)
                 case .LessThan:
-                    return v1 < v2
+                    return CompareResult(v1 < v2)
                 case .GreaterThan:
-                    return v1 > v2
+                    return CompareResult(v1 > v2)
                 case .NotEqual:
-                    return v1 != v2
+                    return CompareResult(v1 != v2)
                 case .LessOrEqual:
-                    return v1 <= v2
+                    return CompareResult(v1 <= v2)
                 case .GreaterOrEqual:
-                    return v1 >= v2
+                    return CompareResult(v1 >= v2)
                 default:
-                    return false
+                    return .badOperator
                 }
             }
         default:
-            return false
+            return .typeMismatch
         }
-        return false
+        return .badOperator
     }
     
     func run(_ program: EMILProgram) {
         program.reset()
         while let cmd = program.getCommand() {
             var status: CommandStatus = .failure
+            var name = "???"
             if let handler = handlerForCode(cmd.command) {
                 status = handler.handler(program, cmd)
+                name = handler.name
             } else {
-                print("Runtime Error")
+                print("Runtime Error: Unknonwn command")
+                return
+            }
+            if status == .failure {
+                print("Runtime Error in command '\(name)'")
                 return
             }
             if status == .stop {
@@ -427,11 +445,17 @@ final class EMILRuntime: EMILRuntimeProtocol {
     
     func emilIf(_ program: EMILProgram, cmd: Command) -> CommandStatus {
         if let a1 = program.getArgument(cmd, num: 0), let op = program.getArgument(cmd, num: 1), let a2 = program.getArgument(cmd, num: 2), let j = program.getArgument(cmd, num: 3) {
-            if compare(lhs: a1, operator: op, rhs: a2) == false {
+            let res = compare(lhs: a1, operator: op, rhs: a2)
+            switch res {
+            case .compareFalse:
                 if case .varInteger(let dest) = j {
                     program.jump(dest)
                     return .didJump
                 }
+            case .compareTrue:
+                return .success
+            default:
+                return .failure
             }
         }
         return .failure
@@ -439,11 +463,17 @@ final class EMILRuntime: EMILRuntimeProtocol {
     
     func emilCase(_ program: EMILProgram, cmd: Command) -> CommandStatus {
         if let a1 = program.getArgument(cmd, num: 0), let op = program.getArgument(cmd, num: 1), let a2 = program.getArgument(cmd, num: 2), let j = program.getArgument(cmd, num: 3) {
-            if compare(lhs: a1, operator: op, rhs: a2) == false {
+            let res = compare(lhs: a1, operator: op, rhs: a2)
+            switch res {
+            case .compareFalse:
                 if case .varInteger(let dest) = j {
                     program.jump(dest)
                     return .didJump
                 }
+            case .compareTrue:
+                return .success
+            default:
+                return .failure
             }
         }
         return .failure
@@ -479,11 +509,17 @@ final class EMILRuntime: EMILRuntimeProtocol {
     
     func emilWhile(_ program: EMILProgram, cmd: Command) -> CommandStatus {
         if let a1 = program.getArgument(cmd, num: 0), let op = program.getArgument(cmd, num: 1), let a2 = program.getArgument(cmd, num: 2), let j = program.getArgument(cmd, num: 3) {
-            if compare(lhs: a1, operator: op, rhs: a2) == false {
+            let res = compare(lhs: a1, operator: op, rhs: a2)
+            switch res {
+            case .compareFalse:
                 if case .varInteger(let dest) = j {
                     program.jump(dest)
                     return .didJump
                 }
+            case .compareTrue:
+                return .success
+            default:
+                return .failure
             }
         }
         return .failure
@@ -501,11 +537,17 @@ final class EMILRuntime: EMILRuntimeProtocol {
     
     func emilUntil(_ program: EMILProgram, cmd: Command) -> CommandStatus {
         if let a1 = program.getArgument(cmd, num: 0), let op = program.getArgument(cmd, num: 1), let a2 = program.getArgument(cmd, num: 2), let j = program.getArgument(cmd, num: 3) {
-            if compare(lhs: a1, operator: op, rhs: a2) == false {
+            let res = compare(lhs: a1, operator: op, rhs: a2)
+            switch res {
+            case .compareFalse:
                 if case .varInteger(let dest) = j {
                     program.jump(dest)
                     return .didJump
                 }
+            case .compareTrue:
+                return .success
+            default:
+                return .failure
             }
         }
         return .failure

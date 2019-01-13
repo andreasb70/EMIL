@@ -407,6 +407,7 @@ final class EMIL {
                                 for br in breakList {
                                     var breakCmd = program.commands[br]
                                     breakCmd.arguments.append(.jumpDest(program.commands.count+1))
+                                    program.commands[br] = breakCmd
                                 }
                             } else {
                                 result = .nestingSelect
