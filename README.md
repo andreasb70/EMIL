@@ -14,13 +14,13 @@ where a simple, easy to handle scripting language is needed and other available 
 - Subroutines
 - String interpolation
 - Easy extension with own commands
-- EMIL is first compiled, therefore reasonaly speedy
+- EMIL is first compiled, therefore reasonably speedy
 
 ## Restrictions
 
 - Numeric expressions only as part of the "eval" command
 - No local variables (only a single, global context), therefore no recusion!
-- Subroutines have no return value
+- Subroutines have arguments and return value
 - No structs, classes or anything like that
 - No arrays or dictionaries
 - No logic operations (like AND, OR ...)
@@ -285,7 +285,7 @@ func emilFactorial(_ program: EMILProgram, cmd: Command) -> CommandStatus {
 
 ## The Future
 
-EMIL is good enough for many little scripting need withing Apps, but certainly it would be nice to remove some of the restrictions. This most precious ones IMHO are:
+EMIL is good enough for many little scripting needs withing Apps, but certainly it would be nice to remove some of the restrictions. This most precious ones IMHO are:
 
 - Add a concept of local variables (and as a result passing parameters to sub-routines)
 - Add array and dictionary variable types
