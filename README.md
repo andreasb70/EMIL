@@ -258,6 +258,7 @@ For each command a handler function has to be implemented:
 
 **EMILProgram** offers the following methods
 - ```func getArgument(_ command: Command, num argnum: Int) -> Variable?```: The argument number *argnum*
+- ```func numArguments(_ command: Command) -> Int```: Returns number of passed arguents
 - ```func setReturn(_ command: Command, val: Variable) -> Bool```: Set the return value
 
 Example implementing a *fact* command calculating the factorial of the given argument:
