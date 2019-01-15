@@ -92,7 +92,7 @@ SUB printHello
 
 Value assignments are done using the ```:=``` operator
 
-```pi:=3.1415``` or ```len:=strlen("Hallo")
+```pi:=3.1415``` or ```len:=strlen("Hallo")```
 
 ### Conditions
 
