@@ -1,6 +1,6 @@
-    VAR int i,j
-    VAR str name
-    VAR float pi,d,u
+VAR int i,j
+VAR str name
+VAR float pi,d,u
 
 SUB subRoutine2
     print "subRoutine2"
